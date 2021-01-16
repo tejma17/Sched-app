@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mat4">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="35dp"
+        android:layout_marginTop="60dp"
+        app:cardElevation="30dp"
+        app:cardCornerRadius="20dp"
+        android:visibility="visible"
+        android:layout_centerInParent="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="30dp"
+            android:background="@color/background"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="WELCOME"
+                android:textColor="@color/set_text"
+                android:textSize="24sp"
+                android:fontFamily="@font/raleway"
+                android:gravity="center" />
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:layout_marginHorizontal="10dp"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                android:gravity="center"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:visibility="visible"-->
+<!--                android:baselineAligned="false">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/code"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:paddingEnd="10dp"-->
+<!--                    android:text="+91"-->
+<!--                    android:padding="0dp"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:gravity="center_vertical|end"-->
+<!--                    android:textColor="@color/set_text"-->
+<!--                    android:letterSpacing="0.2"/>-->
+
+<!--                <View-->
+<!--                    android:id="@+id/line"-->
+<!--                    android:layout_width="1dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_marginVertical="15dp"-->
+<!--                    android:background="@color/select"/>-->
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/phoneid"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="4"
+                    app:errorEnabled="true"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginHorizontal="25dp"
+                    android:backgroundTint="@color/select"
+                    app:errorTextColor="#FF0000">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Mobile number with country code"
+                        android:inputType="phone"
+                        android:background="@android:color/transparent"
+                        android:maxLines="1"
+                        android:letterSpacing="0.2"
+                        android:ellipsize="end"
+                        android:scrollHorizontally="true"
+                        android:textColor="@color/set_text"
+                        android:textSize="20sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+<!--            </LinearLayout>-->
+
+            <TextView
+                android:id="@+id/msg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:fontFamily="@font/averia_libre_bold"
+                android:lineSpacingExtra="5dp"
+                android:textSize="18sp"
+                android:textColor="@color/set_text" />
+
+            <EditText
+                android:id="@+id/otpid"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/set_text"
+                android:textSize="22sp"
+                android:letterSpacing="0.1"
+                android:gravity="center"
+                android:textColorHint="@color/text_hint"
+                android:fontFamily="@font/averia_libre_bold"
+                android:hint="Enter OTP"
+                android:inputType="number"
+                android:autofillHints="true" />
+
+            <TextView
+                android:id="@+id/resend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/text_hint"
+                android:visibility="gone"
+                android:fontFamily="@font/raleway"
+                android:layout_gravity="end"
+                android:layout_marginEnd="20dp"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <RelativeLayout
+                android:id="@+id/auto_detect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_marginHorizontal="10dp">
+
+                <ProgressBar
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:visibility="visible"
+                    android:backgroundTint="@color/select"
+                    android:layout_toStartOf="@id/verify"
+                    android:layout_centerHorizontal="true"
+                    android:indeterminate="true" />
+
+                <TextView
+                    android:id="@+id/verify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Auto detecting"
+                    android:fontFamily="@font/raleway"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/select"
+                    android:layout_marginStart="5dp"/>
+
+            </RelativeLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/submit_otp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Get OTP"
+                app:cornerRadius="5dp"
+                android:textSize="16sp"
+                android:textColor="@color/background"
+                android:textStyle="bold"
+                android:fontFamily="@font/raleway"
+                android:backgroundTint="@color/select"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="20dp"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

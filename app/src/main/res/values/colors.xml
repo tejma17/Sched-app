@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="background">#FFFFFF</color>
+    <color name="set_text">#000000</color>
+    <color name="list">#EDEDED</color>
+    <color name="text_hint">#706A6A</color>
+    <color name="select">#0B5D7C</color>
+    <color name="selectLight">#0F7AA3</color>
+    <color name="splash">#0B5D7C</color>
+    <color name="colorPrimaryDark">#2C2C2C</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

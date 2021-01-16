@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="48dp"
+        android:background="@color/list"
+        android:id="@+id/fragment_container">
+    </FrameLayout>
+
+    <com.luseen.spacenavigation.SpaceNavigationView
+        android:id="@+id/spaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:transitionName="ADDCLICK"
+        app:active_item_color="@color/select"
+        app:centre_button_color="@color/select"
+        app:centre_button_icon="@drawable/ic_round_add_24"
+        app:inactive_item_color="@color/set_text"
+        app:inactive_centre_button_icon_color="@color/background"
+        app:space_background_color="@color/background"
+        app:space_item_icon_size="20dp"
+        app:space_item_text_size="16sp" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

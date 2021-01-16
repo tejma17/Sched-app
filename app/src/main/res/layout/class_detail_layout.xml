@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/parent_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:transitionName="openClass"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/select"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="15dp"
+        app:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/select">
+
+            <LinearLayout
+                android:id="@+id/nameandtime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Data Minsasing"
+                android:layout_weight="3.5"
+                android:scrollHorizontally="true"
+                android:textColor="@color/background"
+                android:fontFamily="@font/convergence"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="20dp"/>
+
+                <TextView
+                    android:id="@+id/type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1.3"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/convergence"
+                    android:maxLines="1"
+                    android:text="(Lec)"
+                    android:textColor="@color/background"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="end"
+                android:textColor="@color/background"
+                android:text="5:00 pm"
+                android:textStyle="bold"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/convergence"
+                android:textSize="20sp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="20dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/teachtime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nameandtime"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/background"
+                    android:text="DMW"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/raleway"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="18sp"
+                    android:layout_marginStart="20dp"/>
+
+                <TextView
+                    android:id="@+id/faculty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/background"
+                    android:text="VKC"
+                    android:gravity="end"
+                    android:fontFamily="@font/raleway"
+                    android:textSize="18sp"
+                    android:layout_marginEnd="20dp"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="15dp"
+                android:layout_below="@id/teachtime"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/meet"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Join Class"
+                    android:layout_weight="1"
+                    app:cornerRadius="10dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    app:strokeColor="@color/background"
+                    android:textColor="@color/background"
+                    app:backgroundTint="@android:color/transparent"
+                    android:fontFamily="@font/raleway"
+                    android:textSize="17sp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="7dp"
+                    android:textAllCaps="false"
+                    app:iconTint="@color/background"
+                    app:icon="@drawable/ic_google_meet"
+                    app:iconSize="18dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/classroom"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Classroom"
+                    android:textColor="@color/background"
+                    android:layout_weight="1"
+                    app:cornerRadius="10dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    app:strokeColor="@color/background"
+                    app:backgroundTint="@android:color/transparent"
+                    android:fontFamily="@font/raleway"
+                    android:textSize="17sp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="7dp"
+                    android:textAllCaps="false"
+                    app:iconTint="@color/background"
+                    app:icon="@drawable/ic_google_classroom"
+                    app:iconSize="18dp"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="20dp"
+    android:background="@color/background">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:id="@+id/text"
+        android:layout_marginTop="20dp"
+        android:text="Go to web-sched.web.app and follow the instructions."
+        android:fontFamily="@font/alegreya_sans_medium"
+        android:textColor="@color/set_text"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkbox"
+        android:layout_below="@id/text"
+        android:fontFamily="@font/alegreya_sans_medium"
+        android:text="Don't show again"
+        android:textSize="18sp"
+        android:textColor="@color/set_text"
+        android:backgroundTint="@color/select"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Understood"
+        android:padding="0dp"
+        android:id="@+id/understood"
+        android:textAllCaps="true"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/select"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"
+        android:background="@android:color/transparent"
+        android:layout_below="@id/checkbox"
+        android:layout_alignParentEnd="true"/>
+</RelativeLayout>
