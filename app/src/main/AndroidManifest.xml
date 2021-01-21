@@ -6,8 +6,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +16,75 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sched">
+
+        <activity android:name=".ScheduleEvent">
+            <intent-filter
+                android:autoVerify="true"
+                android:label="Quick Schedule">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="zoom.us"
+                    android:scheme="http" />
+                <data
+                    android:host="zoom.us"
+                    android:scheme="https" />
+
+                <data
+                    android:host="teams.microsoft.com"
+                    android:scheme="http" />
+                <data
+                    android:host="teams.microsoft.com"
+                    android:scheme="https" />
+
+                <data
+                    android:host="meet.google.com"
+                    android:scheme="http" />
+                <data
+                    android:host="meet.google.com"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".OpenLinks"
+            android:icon="@drawable/ic_lcd"
+            android:label="Open Links"
+            android:roundIcon="@drawable/ic_lcd">
+            <intent-filter
+                android:autoVerify="true"
+                android:label="Open on PC">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="zoom.us"
+                    android:scheme="http" />
+                <data
+                    android:host="zoom.us"
+                    android:scheme="https" />
+
+                <data
+                    android:host="teams.microsoft.com"
+                    android:scheme="http" />
+                <data
+                    android:host="teams.microsoft.com"
+                    android:scheme="https" />
+
+                <data
+                    android:host="meet.google.com"
+                    android:scheme="http" />
+                <data
+                    android:host="meet.google.com"
+                    android:scheme="https" />
+
+            </intent-filter>
+        </activity>
         <activity android:name=".Login" />
         <activity
             android:name=".Splash"
@@ -32,11 +101,14 @@
 
         <receiver
             android:name=".Service.NotificationBroadcast"
+            android:enabled="true"
             android:exported="true" />
-        <receiver android:name=".Service.AlarmBroadcast" />
+        <receiver
+            android:name=".Service.AlarmBroadcast"
+            android:enabled="true"
+            android:exported="true" />
 
         <service android:name=".Service.OnClearFromRecentService" />
-
     </application>
 
 </manifest>

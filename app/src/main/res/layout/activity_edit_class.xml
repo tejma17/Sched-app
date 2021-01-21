@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:backgroundTint="@color/select"
-                android:hint="Meet Link"
+                android:hint="Class meeting link"
                 android:layout_marginVertical="10dp"
                 android:layout_marginHorizontal="20dp"
                 android:textColorHint="@color/text_hint"
@@ -164,7 +164,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/raleway"
                     android:textColor="@color/set_text"
-                    android:textSize="20sp"/>
+                    android:textSize="18sp"/>
 
             </LinearLayout>
 

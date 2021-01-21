@@ -113,7 +113,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                     String UID = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(UID);
                     databaseReference.child("Link").setValue(link);
-                    Toast.makeText(context, "Success. Check your computer", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Success: Visit web-sched.web.app", Toast.LENGTH_LONG).show();
                     builder.dismiss();
                 }else{
                     Toast.makeText(context, "Please turn on the network access", Toast.LENGTH_SHORT).show();
@@ -145,15 +145,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             @Override
             public void onClick(View view) {
                 link = objects.get(position).getMeet_link();
-                if(link.contains("meet.google.com/")) {
-                    if(link.startsWith("meet.google.com/"))
+                    if(!link.startsWith("https://"))
                         link = "https://"+link;
                     if(sharedPreferences.getString("UNDERSTOOD", "false").equals("false")) {
                         alert.show();
                     }else
                         builder.show();
-                }else
-                    Toast.makeText(context, "Invalid Meet Link", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -169,7 +166,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                     }else
                         builder.show();
                 }else
-                    Toast.makeText(context, "Invalid Classroom Link", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Invalid classroom link", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -30,25 +30,21 @@ public class NotificationBroadcast extends BroadcastReceiver {
         String link = intent.getStringExtra("Link");
         switch (type){
             case "phone":
-                if(link.contains("meet.google.com/")) {
-                    if (link.startsWith("meet.google.com/"))
+                    if (!link.startsWith("https://"))
                         link = "https://" + link;
                     Intent intent1 = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
                     intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent1);
                    // Log.i("ID", intent.getIntExtra(AlarmBroadcast.NOTIFICATION_ID, 0)+"");
                     notificationManager.cancel(intent.getIntExtra(AlarmBroadcast.NOTIFICATION_ID, 0));
-                }
                 break;
             case "PC":
-                if(link.contains("meet.google.com/")) {
-                    if (link.startsWith("meet.google.com/"))
+                    if (!link.startsWith("https://"))
                         link = "https://" + link;
                     String UID = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(UID);
                     databaseReference.child("Link").setValue(link);
                     notificationManager.cancel(intent.getIntExtra(AlarmBroadcast.NOTIFICATION_ID, 0));
-                }
                 break;
         }
     }

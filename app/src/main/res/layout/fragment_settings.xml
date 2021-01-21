@@ -42,7 +42,7 @@
             android:textColor="@color/set_text"
             android:text="Dark Mode"
             android:fontFamily="@font/raleway"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/mode"
@@ -60,7 +60,7 @@
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="5dp"
         android:layout_below="@id/mode_layout"
-        android:background="@color/select"/>
+        android:background="@color/text_hint"/>
 
     <Button
         android:id="@+id/rate"
@@ -75,7 +75,7 @@
         android:gravity="start|center_vertical"
         style="?android:attr/borderlessButtonStyle"
         android:fontFamily="@font/raleway"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textAllCaps="false"
         android:padding="0dp"/>
 
@@ -86,7 +86,7 @@
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="5dp"
         android:layout_below="@id/rate"
-        android:background="@color/select"/>
+        android:background="@color/text_hint"/>
 
     <Button
         android:id="@+id/Reset"
@@ -96,12 +96,12 @@
         android:layout_below="@id/line2"
         android:layout_marginTop="5dp"
         android:layout_marginHorizontal="20dp"
-        android:text="Reset all Data"
+        android:text="Reset Data"
         android:textColor="@color/set_text"
         android:gravity="start|center_vertical"
         style="?android:attr/borderlessButtonStyle"
         android:fontFamily="@font/raleway"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textAllCaps="false"
         android:padding="0dp"/>
 
@@ -112,7 +112,7 @@
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="5dp"
         android:layout_below="@id/Reset"
-        android:background="@color/select"/>
+        android:background="@color/text_hint"/>
 
     <Button
         android:id="@+id/share"
@@ -127,7 +127,7 @@
         android:gravity="start|center_vertical"
         style="?android:attr/borderlessButtonStyle"
         android:fontFamily="@font/raleway"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textAllCaps="false"
         android:padding="0dp"/>
 
@@ -138,7 +138,7 @@
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="5dp"
         android:layout_below="@id/share"
-        android:background="@color/select"/>
+        android:background="@color/text_hint"/>
 
     <Button
         android:id="@+id/privacy"
@@ -153,7 +153,7 @@
         android:gravity="start|center_vertical"
         style="?android:attr/borderlessButtonStyle"
         android:fontFamily="@font/raleway"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textAllCaps="false"
         android:padding="0dp"/>
 
@@ -164,7 +164,7 @@
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="5dp"
         android:layout_below="@id/privacy"
-        android:background="@color/select"/>
+        android:background="@color/text_hint"/>
 
     <Button
         android:id="@+id/signout"
@@ -179,7 +179,7 @@
         android:gravity="start|center_vertical"
         style="?android:attr/borderlessButtonStyle"
         android:fontFamily="@font/raleway"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textAllCaps="false"
         android:padding="0dp"/>
 
@@ -190,13 +190,13 @@
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="5dp"
         android:layout_below="@id/signout"
-        android:background="@color/select"/>
+        android:background="@color/text_hint"/>
 
     <TextView
         android:id="@+id/version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:layout_centerHorizontal="true"
         android:layout_marginVertical="50dp"
         android:layout_below="@id/line6"

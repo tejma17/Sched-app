@@ -47,6 +47,7 @@ public class EditClass extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_class);
 
+
         String[] info = getIntent().getStringExtra("Lecture").split("GAP");
 
         sharedPreferences = getSharedPreferences("Classes", MODE_PRIVATE);
@@ -58,6 +59,7 @@ public class EditClass extends AppCompatActivity {
         if(lecturesSaved==null){
             lecturesSaved = new ArrayList<>();
         }
+
         for(Lecture lecture: lecturesSaved){
             if(lecture.getType().equals(info[2]) && lecture.getTime().equals(info[1]) && lecture.getCode().equals(info[0])){
                 liveLecture = lecture;

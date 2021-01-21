@@ -63,8 +63,8 @@ public class CreateNotification {
                     .setOnlyAlertOnce(false)
                     .setColor(ContextCompat.getColor(context, R.color.select))
                     .setContentIntent(resultPendingIntent)
-                    .addAction(R.drawable.ic_google_meet, "Join on Phone", pendingIntentphone)
-                    .addAction(R.drawable.ic_google_meet, "Join on PC", pendingIntentPC)
+                    .addAction(R.drawable.ic_google_meet_color, "Join on phone", pendingIntentphone)
+                    .addAction(R.drawable.ic_google_meet_color, "Join on PC", pendingIntentPC)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .build();
 

@@ -129,6 +129,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Join Class"
+                    android:textStyle="bold"
                     android:layout_weight="1"
                     app:cornerRadius="10dp"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -141,7 +142,7 @@
                     android:layout_marginEnd="7dp"
                     android:textAllCaps="false"
                     app:iconTint="@color/background"
-                    app:icon="@drawable/ic_google_meet"
+                    app:icon="@drawable/ic_google_meet_color"
                     app:iconSize="18dp"/>
 
                 <com.google.android.material.button.MaterialButton
@@ -149,6 +150,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Classroom"
+                    android:textStyle="bold"
                     android:textColor="@color/background"
                     android:layout_weight="1"
                     app:cornerRadius="10dp"

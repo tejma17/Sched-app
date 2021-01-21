@@ -58,11 +58,12 @@
                     android:paddingHorizontal="15dp"
                     android:scaleType="fitCenter"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/ic_smartphone"/>
+                    android:src="@drawable/ic_mobile_phone"/>
                 <TextView
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:text="Phone"
+                    android:textColor="@color/set_text"
                     android:fontFamily="@font/raleway"
                     android:paddingBottom="10dp"
                     android:gravity="center"
@@ -92,11 +93,12 @@
                     android:paddingHorizontal="20dp"
                     android:scaleType="fitCenter"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/ic_pc_search"/>
+                    android:src="@drawable/ic_lcd"/>
                 <TextView
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:text="PC"
+                    android:textColor="@color/set_text"
                     android:fontFamily="@font/raleway"
                     android:paddingBottom="10dp"
                     android:gravity="center"
