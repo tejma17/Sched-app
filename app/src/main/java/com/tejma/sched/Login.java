@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -40,6 +41,8 @@ public class Login extends AppCompatActivity {
     private String mVerificationId;
     private FirebaseAuth firebaseAuth;
     private final String TAG = "HELLO";
+    private String[] intentContent;
+    private String intentString;
     private String Mobile, Code;
     private boolean isNew = true;
     private CountDownTimer timer;
@@ -59,6 +62,10 @@ public class Login extends AppCompatActivity {
         otp = findViewById(R.id.otpid);
         auto_detect = findViewById(R.id.auto_detect);
         firebaseAuth = FirebaseAuth.getInstance();
+
+        intentString = getIntent().getStringExtra("IntentAction");
+        if(intentString!=null)
+            intentContent = intentString.split("SPLIT");
 
         timer = new CountDownTimer(30000, 1000) {
             @Override
@@ -202,12 +209,20 @@ public class Login extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         Log.d(TAG, "signInWithCredential:success");
-                        boolean isNew = Objects.requireNonNull(Objects.requireNonNull(task.getResult()).getAdditionalUserInfo()).isNewUser();
-                        if(isNew){
-                            Toast.makeText(Login.this, "Welcome to Sched", Toast.LENGTH_SHORT).show();
-                        }else
-                            Toast.makeText(Login.this, "Welcome back", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Login.this, Navigation.class));
+                        if(intentString!=null){
+                            if(intentContent[0].equals("OpenLink")) {
+                                startActivity(new Intent(Login.this, OpenLinks.class).setData(Uri.parse(intentContent[1])));
+                            }else{
+                                startActivity(new Intent(Login.this, ScheduleEvent.class).setData(Uri.parse(intentContent[1])));
+                            }
+                        }else {
+                            boolean isNew = Objects.requireNonNull(Objects.requireNonNull(task.getResult()).getAdditionalUserInfo()).isNewUser();
+                            if (isNew) {
+                                Toast.makeText(Login.this, "Welcome to Sched", Toast.LENGTH_SHORT).show();
+                            } else
+                                Toast.makeText(Login.this, "Welcome back", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Login.this, Navigation.class));
+                        }
                         finish();
                     } else {
                         FirebaseAuthException e = (FirebaseAuthException) task.getException();

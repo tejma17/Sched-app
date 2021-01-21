@@ -20,6 +20,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tejma.sched.POJO.Lecture;
@@ -50,6 +51,12 @@ public class ScheduleEvent extends AppCompatActivity {
         Intent intent = getIntent();
         Uri data = intent.getData();
         link = data.toString();
+
+        if(FirebaseAuth.getInstance().getCurrentUser()==null){
+            Toast.makeText(this, "Login to app first", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(ScheduleEvent.this, Login.class).putExtra("IntentAction", "ScheduleSPLIT"+data.toString()));
+            finish();
+        }
 
         sharedPreferences = getSharedPreferences("Classes", MODE_PRIVATE);
         String jsonIn = sharedPreferences.getString("Lectures", null);
