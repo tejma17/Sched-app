@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:transitionName="openClass"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/list"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:background="@color/background"
+        android:elevation="8dp"
+        android:layout_height="?actionBarSize">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="12dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="20dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="QUICK SCHEDULE"
+            android:fontFamily="@font/baloo"
+            android:textSize="20sp"
+            android:textColor="@color/set_text"/>
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="BASIC INFO"
+                android:fontFamily="@font/raleway"
+                android:textSize="22sp"
+                android:textColor="@color/set_text"/>
+
+            <EditText
+                android:id="@+id/subject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:hint="Course Name"
+                android:backgroundTint="@color/select"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="20dp"
+                android:textColorHint="@color/text_hint"
+                android:textColor="@color/set_text"
+                android:fontFamily="@font/raleway"/>
+
+            <EditText
+                android:id="@+id/code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:backgroundTint="@color/select"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="20dp"
+                android:hint="Course Code"
+                android:textColorHint="@color/text_hint"
+                android:textColor="@color/set_text"
+                android:fontFamily="@font/raleway"/>
+
+            <EditText
+                android:id="@+id/faculty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:backgroundTint="@color/select"
+                android:hint="Faculty"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="20dp"
+                android:textColorHint="@color/text_hint"
+                android:textColor="@color/set_text"
+                android:fontFamily="@font/raleway"/>
+
+            <EditText
+                android:id="@+id/meetLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:backgroundTint="@color/select"
+                android:hint="Meeting Link"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="20dp"
+                android:textColorHint="@color/text_hint"
+                android:textColor="@color/set_text"
+                android:fontFamily="@font/raleway"/>
+
+            <EditText
+                android:id="@+id/classroomLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:backgroundTint="@color/select"
+                android:hint="Classroom Link"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="20dp"
+                android:textColorHint="@color/text_hint"
+                android:textColor="@color/set_text"
+                android:fontFamily="@font/raleway"/>
+
+
+
+            <EditText
+                android:id="@+id/type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:ellipsize="end"
+                android:backgroundTint="@color/select"
+                android:text="LECTURE"
+                android:fontFamily="@font/raleway"
+                android:textSize="22sp"
+                android:textColor="@color/set_text"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="20dp">
+                <Spinner
+                    android:id="@+id/daySpinner"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"/>
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Set Time"
+                    android:gravity="center_vertical|end"
+                    android:paddingHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/raleway"
+                    android:textColor="@color/set_text"
+                    android:textSize="18sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/set_text"
+                    android:text="Reminders"
+                    android:fontFamily="@font/raleway"
+                    android:textSize="18sp"/>
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/reminder"
+                    android:layout_width="0dp"
+                    android:checked="true"
+                    android:layout_height="40dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:backgroundTint="@color/select"
+                app:cornerRadius="10dp"
+                android:textSize="18sp"
+                android:textColor="@color/background"
+                android:fontFamily="@font/raleway"
+                android:layout_marginVertical="10dp"
+                android:text="SAVE CHANGES"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
