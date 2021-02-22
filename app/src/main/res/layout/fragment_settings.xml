@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/list">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -29,7 +30,6 @@
         android:id="@+id/mode_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
         android:gravity="center_vertical"
@@ -59,18 +59,16 @@
         android:layout_height="1dp"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="5dp"
-        android:layout_below="@id/mode_layout"
         android:background="@color/text_hint"/>
 
     <Button
-        android:id="@+id/rate"
+        android:id="@+id/reminder"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@android:color/transparent"
-        android:layout_below="@id/line1"
         android:layout_marginTop="5dp"
         android:layout_marginHorizontal="20dp"
-        android:text="Rate and Review"
+        android:text="Reminder Settings"
         android:textColor="@color/set_text"
         android:gravity="start|center_vertical"
         style="?android:attr/borderlessButtonStyle"
@@ -80,20 +78,20 @@
         android:padding="0dp"/>
 
     <View
-        android:id="@+id/line2"
+        android:id="@+id/line7"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="5dp"
-        android:layout_below="@id/rate"
         android:background="@color/text_hint"/>
+
+
 
     <Button
         android:id="@+id/Reset"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@android:color/transparent"
-        android:layout_below="@id/line2"
         android:layout_marginTop="5dp"
         android:layout_marginHorizontal="20dp"
         android:text="Reset Data"
@@ -111,7 +109,6 @@
         android:layout_height="1dp"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="5dp"
-        android:layout_below="@id/Reset"
         android:background="@color/text_hint"/>
 
     <Button
@@ -119,7 +116,6 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@android:color/transparent"
-        android:layout_below="@id/line3"
         android:layout_marginTop="5dp"
         android:layout_marginHorizontal="20dp"
         android:text="Share App"
@@ -137,7 +133,30 @@
         android:layout_height="1dp"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="5dp"
-        android:layout_below="@id/share"
+        android:background="@color/text_hint"/>
+
+    <Button
+        android:id="@+id/rate"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="20dp"
+        android:text="Rate and Review"
+        android:textColor="@color/set_text"
+        android:gravity="start|center_vertical"
+        style="?android:attr/borderlessButtonStyle"
+        android:fontFamily="@font/raleway"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:padding="0dp"/>
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="5dp"
         android:background="@color/text_hint"/>
 
     <Button
@@ -145,7 +164,6 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@android:color/transparent"
-        android:layout_below="@id/line4"
         android:layout_marginTop="5dp"
         android:layout_marginHorizontal="20dp"
         android:text="Privacy Policy"
@@ -163,7 +181,6 @@
         android:layout_height="1dp"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="5dp"
-        android:layout_below="@id/privacy"
         android:background="@color/text_hint"/>
 
     <Button
@@ -171,7 +188,6 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@android:color/transparent"
-        android:layout_below="@id/line5"
         android:layout_marginTop="5dp"
         android:layout_marginHorizontal="20dp"
         android:text="Logout"
@@ -189,20 +205,20 @@
         android:layout_height="1dp"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="5dp"
-        android:layout_below="@id/signout"
         android:background="@color/text_hint"/>
+
+
 
     <TextView
         android:id="@+id/version"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:layout_marginVertical="50dp"
-        android:layout_below="@id/line6"
         android:text="v 1.1.0"
         android:textAllCaps="false"
         android:fontFamily="@font/convergence"
         android:textColor="@color/text_hint"/>
 
-</RelativeLayout>
+</LinearLayout>

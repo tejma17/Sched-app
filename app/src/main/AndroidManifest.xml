@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -16,7 +15,7 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sched">
-
+        <activity android:name=".ReminderSettings" />
         <activity android:name=".ScheduleEvent">
             <intent-filter
                 android:autoVerify="true"
@@ -25,11 +24,30 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="zoom.us"
                     android:scheme="http" />
                 <data
                     android:host="zoom.us"
+                    android:scheme="https" />
+                <data
+                    android:host="*.meetzoom.nets"
+                    android:scheme="https" />
+                <data
+                    android:host="*.zoomus.cn"
+                    android:scheme="https" />
+                <data
+                    android:host="meetzoom.net"
+                    android:scheme="https" />
+                <data
+                    android:host="*.zoom.us"
+                    android:scheme="https" />
+                <data
+                    android:host="*.zoom.com"
+                    android:scheme="https" />
+                <data
+                    android:host="zoom.com.cn"
                     android:scheme="https" />
 
                 <data
@@ -38,6 +56,31 @@
                 <data
                     android:host="teams.microsoft.com"
                     android:scheme="https" />
+                <data
+                    android:host="govt.teams.microsoft.us"
+                    android:scheme="https" />
+                <data
+                    android:host="dod.teams.microsoft.us"
+                    android:scheme="https" />
+                <data
+                    android:host="ppespaces.skype.com"
+                    android:scheme="https" />
+                <data
+                    android:host="teams.skype.com"
+                    android:scheme="https" />
+                <data
+                    android:host="devspaces.skype.com"
+                    android:scheme="https" />
+                <data
+                    android:host="teams.live.com"
+                    android:scheme="https" />
+
+                <data
+                    android:host="*.webex.com"
+                    android:scheme="https" />
+                <data
+                    android:host="fake_assistant.webex.com"
+                    android:scheme="https" />
 
                 <data
                     android:host="meet.google.com"
@@ -45,10 +88,15 @@
                 <data
                     android:host="meet.google.com"
                     android:scheme="https" />
+                <data
+                    android:host="dial.meet"
+                    android:scheme="https" />
+                <data
+                    android:host="tel.meet"
+                    android:scheme="https" />
+
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".OpenLinks"
             android:icon="@drawable/ic_lcd"
@@ -68,12 +116,55 @@
                 <data
                     android:host="zoom.us"
                     android:scheme="https" />
+                <data
+                    android:host="*.meetzoom.nets"
+                    android:scheme="https" />
+                <data
+                    android:host="*.zoomus.cn"
+                    android:scheme="https" />
+                <data
+                    android:host="meetzoom.net"
+                    android:scheme="https" />
+                <data
+                    android:host="*.zoom.us"
+                    android:scheme="https" />
+                <data
+                    android:host="*.zoom.com"
+                    android:scheme="https" />
+                <data
+                    android:host="zoom.com.cn"
+                    android:scheme="https" />
 
                 <data
                     android:host="teams.microsoft.com"
                     android:scheme="http" />
                 <data
                     android:host="teams.microsoft.com"
+                    android:scheme="https" />
+                <data
+                    android:host="govt.teams.microsoft.us"
+                    android:scheme="https" />
+                <data
+                    android:host="dod.teams.microsoft.us"
+                    android:scheme="https" />
+                <data
+                    android:host="ppespaces.skype.com"
+                    android:scheme="https" />
+                <data
+                    android:host="teams.skype.com"
+                    android:scheme="https" />
+                <data
+                    android:host="devspaces.skype.com"
+                    android:scheme="https" />
+                <data
+                    android:host="teams.live.com"
+                    android:scheme="https" />
+
+                <data
+                    android:host="*.webex.com"
+                    android:scheme="https" />
+                <data
+                    android:host="fake_assistant.webex.com"
                     android:scheme="https" />
 
                 <data
@@ -82,7 +173,12 @@
                 <data
                     android:host="meet.google.com"
                     android:scheme="https" />
-
+                <data
+                    android:host="dial.meet"
+                    android:scheme="https" />
+                <data
+                    android:host="tel.meet"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity android:name=".Login" />
@@ -102,12 +198,13 @@
         <receiver
             android:name=".Service.NotificationBroadcast"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false" />
         <receiver
             android:name=".Service.AlarmBroadcast"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false" />
 
+        <service android:name=".Service.OnClearFromRecentService" />
         <service android:name=".Service.OnClearFromRecentService" />
     </application>
 

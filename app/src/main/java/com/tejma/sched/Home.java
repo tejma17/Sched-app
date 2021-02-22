@@ -62,7 +62,8 @@ public class Home extends Fragment implements MyAdapter.onNoteListener, View.OnC
     private RelativeLayout swipeLayout;
     private LinearLayout animationView;
     private String notificationSent;
-    private final int REQUEST_CODE = 100;
+    private int notiEnabled;
+    private final int REQUEST_CODE = 0;
     private SharedPreferences sharedPreferences;
     private ArrayList<Lecture> lectures = new ArrayList<>();
     private final ArrayList<Lecture> todayLectures = new ArrayList<>();
@@ -125,46 +126,20 @@ public class Home extends Fragment implements MyAdapter.onNoteListener, View.OnC
         });
 
 
-        //check updates
-        final AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(getActivity());
-        Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
-
-        appUpdateInfoTask.addOnSuccessListener(result -> {
-            if (result.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                    && result.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
-
-                try {
-                    appUpdateManager.startUpdateFlowForResult(result, AppUpdateType.IMMEDIATE, getActivity(), REQUEST_CODE);
-                } catch (IntentSender.SendIntentException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
         return view;
     }
 
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE) {
-            if (requestCode != RESULT_OK) {
-                Log.d("TAG", "Update failed" + requestCode);
-            }
-        }
-    }
-
     private void checkClasses(int day) {
         todayLectures.clear();
         notificationSent = sharedPreferences.getString("Notification", "NO");
+        notiEnabled = sharedPreferences.getInt("NotiEnabled", 1);
+
         int i = 100;
         boolean flag = false;
         for(Lecture lecture: lectures){
 
-            if(lecture.isNotified() && notificationSent.equals("NO")) {
+            if(notiEnabled==1 && lecture.isNotified() && notificationSent.equals("NO")) {
                 CreateNotification.createNotification(getActivity(), lecture, i);
                 i++;
                 flag = true;

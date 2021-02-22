@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 
@@ -22,9 +23,13 @@ public class CreateNotification {
 
     public static final String CHANNEL_ID = "channelNotify";
     public static  Notification notification;
+    private static SharedPreferences sharedPreferences;
 
     public static void createNotification(Context context, Lecture lecture, int id){
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+
+            sharedPreferences = context.getSharedPreferences("Classes", Context.MODE_PRIVATE);
+            int notifyBefore = sharedPreferences.getInt("NotifyBefore", 10);
 
             PendingIntent pendingIntentphone, pendingIntentPC;
 
@@ -57,7 +62,7 @@ public class CreateNotification {
             notification = new NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.drawable.logo_trans)
                     .setContentTitle(titleText)
-                    .setContentText(lecture.getType()+" class scheduled in 10 minutes")
+                    .setContentText(lecture.getType()+" class scheduled in "+notifyBefore+" minutes")
                     .setAutoCancel(true)
                     .setShowWhen(false)
                     .setOnlyAlertOnce(false)
@@ -85,8 +90,8 @@ public class CreateNotification {
            // Log.i("Details= "+lecture.getSubject()+" "+lecture.getType(), lecture.getDay()+" "+day);
             int hour = Integer.parseInt(lecTimeDivided[0]);
             int minutes =  Integer.parseInt(lecTimeDivided[1]);
-            if(minutes<10){
-                int diff = 10-minutes;
+            if(minutes<notifyBefore){
+                int diff = notifyBefore-minutes;
                 minutes = 60-diff;
                 if(hour==0){
                     hour = 23;
@@ -97,7 +102,7 @@ public class CreateNotification {
                 }else
                     hour--;
             }else{
-                minutes = minutes-10;
+                minutes = minutes-notifyBefore;
             }
             time.set(Calendar.DAY_OF_WEEK, day);
             time.set(Calendar.HOUR_OF_DAY, hour);
@@ -107,7 +112,8 @@ public class CreateNotification {
             if(System.currentTimeMillis()-time.getTimeInMillis()<=480000) {
                 Log.i("Scheduled "+lecture.getSubject()+" "+lecture.getType(), "At "+time.getTime()+" id "+id);
                 AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent2);
+                alarmManager.cancel(pendingIntent2);
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), 7*24*60*60*1000, pendingIntent2);
             }
         }
     }

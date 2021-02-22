@@ -8,12 +8,16 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
+    buildFeatures {
+        viewBinding true
+    }
+
     defaultConfig {
         applicationId "com.tejma.sched"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 10
-        versionName "1.1.8"
+        versionCode 15
+        versionName "1.2.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

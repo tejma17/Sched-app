@@ -90,12 +90,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
         CheckBox checkBox = alert.findViewById(R.id.checkbox);
         checkBox.setVisibility(View.VISIBLE);
-        TextView button = alert.findViewById(R.id.understood);
-        button.setOnClickListener(new View.OnClickListener() {
+        TextView understood = alert.findViewById(R.id.understood);
+        understood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 alert.dismiss();
-                builder.show();
+                String UID = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(UID);
+                databaseReference.child("Link").setValue(link);
+                Toast.makeText(context, "Success: Visit web-sched.web.app", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -110,13 +113,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             @Override
             public void onClick(View v) {
                 if(isConnection()) {
-                    String UID = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(UID);
-                    databaseReference.child("Link").setValue(link);
-                    Toast.makeText(context, "Success: Visit web-sched.web.app", Toast.LENGTH_LONG).show();
+                    if(sharedPreferences.getString("UNDERSTOOD", "false").equals("false")) {
+                        alert.show();
+                    }else {
+                        String UID = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(UID);
+                        databaseReference.child("Link").setValue(link);
+                        Toast.makeText(context, "Success: Visit web-sched.web.app", Toast.LENGTH_LONG).show();
+                    }
                     builder.dismiss();
                 }else{
-                    Toast.makeText(context, "Please turn on the network access", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "No network connection", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -147,10 +154,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                 link = objects.get(position).getMeet_link();
                     if(!link.startsWith("https://"))
                         link = "https://"+link;
-                    if(sharedPreferences.getString("UNDERSTOOD", "false").equals("false")) {
-                        alert.show();
-                    }else
-                        builder.show();
+                    builder.show();
+
             }
         });
 
@@ -161,10 +166,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
                 if(link.contains("classroom.google.com/")) {
                     if(link.startsWith("classroom.google.com/"))
                         link = "https://"+link;
-                    if(sharedPreferences.getString("UNDERSTOOD", "false").equals("false")) {
-                        alert.show();
-                    }else
-                        builder.show();
+                    builder.show();
                 }else
                     Toast.makeText(context, "Invalid classroom link", Toast.LENGTH_SHORT).show();
             }

@@ -46,7 +46,7 @@ public class ScheduleEvent extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_class);
+        setContentView(R.layout.activity_schedule_event);
 
         Intent intent = getIntent();
         Uri data = intent.getData();

@@ -85,8 +85,8 @@ public class Navigation extends AppCompatActivity {
 
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         createChannel();
         IntentFilter filter = new IntentFilter("tracks");
         registerReceiver(broadcastReceiver, filter);
@@ -110,8 +110,8 @@ public class Navigation extends AppCompatActivity {
 
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
         unregisterReceiver(broadcastReceiver);
     }
 

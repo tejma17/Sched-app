@@ -29,11 +29,12 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
+import java.util.Set;
 
 public class Settings extends Fragment {
 
     View view;
-    Button rate, reset, share, signout, privacy;
+    Button rate, reset, share, signout, privacy, reminder;
     SharedPreferences sharedPreferences;
     SwitchMaterial dark;
     TextView textView;
@@ -51,6 +52,7 @@ public class Settings extends Fragment {
         signout = view.findViewById(R.id.signout);
         textView = view.findViewById(R.id.version);
         privacy = view.findViewById(R.id.privacy);
+        reminder = view.findViewById(R.id.reminder);
 
         String phone = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getPhoneNumber();
         phone = Objects.requireNonNull(phone).substring(phone.length()-4);
@@ -91,6 +93,10 @@ public class Settings extends Fragment {
             }
         });
 
+
+        reminder.setOnClickListener(view ->{
+            startActivity(new Intent(getContext(), ReminderSettings.class));
+        });
 
         rate.setOnClickListener(new View.OnClickListener() {
             @Override
