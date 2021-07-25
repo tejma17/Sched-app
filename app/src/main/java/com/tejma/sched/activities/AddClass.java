@@ -1,4 +1,4 @@
-package com.tejma.sched;
+package com.tejma.sched.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,6 +21,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tejma.sched.POJO.Lecture;
+import com.tejma.sched.R;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

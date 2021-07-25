@@ -1,4 +1,4 @@
-package com.tejma.sched;
+package com.tejma.sched.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.tejma.sched.R;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;

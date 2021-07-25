@@ -1,4 +1,4 @@
-package com.tejma.sched.Service;
+package com.tejma.sched.Utils;
 
 import android.app.Notification;
 import android.app.NotificationManager;

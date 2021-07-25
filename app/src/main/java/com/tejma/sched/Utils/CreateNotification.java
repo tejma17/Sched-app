@@ -1,4 +1,4 @@
-package com.tejma.sched;
+package com.tejma.sched.Utils;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -14,8 +14,10 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import com.tejma.sched.POJO.Lecture;
-import com.tejma.sched.Service.AlarmBroadcast;
-import com.tejma.sched.Service.NotificationBroadcast;
+import com.tejma.sched.R;
+import com.tejma.sched.Utils.AlarmBroadcast;
+import com.tejma.sched.Utils.NotificationBroadcast;
+import com.tejma.sched.activities.Navigation;
 
 import java.util.Calendar;
 
@@ -23,6 +25,8 @@ public class CreateNotification {
 
     public static final String CHANNEL_ID = "channelNotify";
     public static  Notification notification;
+    public static PendingIntent pendingIntentphone, pendingIntentPC;
+    public static AlarmManager alarmManager;
     private static SharedPreferences sharedPreferences;
 
     public static void createNotification(Context context, Lecture lecture, int id){
@@ -31,7 +35,6 @@ public class CreateNotification {
             sharedPreferences = context.getSharedPreferences("Classes", Context.MODE_PRIVATE);
             int notifyBefore = sharedPreferences.getInt("NotifyBefore", 10);
 
-            PendingIntent pendingIntentphone, pendingIntentPC;
 
             Intent intentPhone = new Intent(context, NotificationBroadcast.class)
                     .setAction("phone");
@@ -111,8 +114,15 @@ public class CreateNotification {
 
             if(System.currentTimeMillis()-time.getTimeInMillis()<=480000) {
                 Log.i("Scheduled "+lecture.getSubject()+" "+lecture.getType(), "At "+time.getTime()+" id "+id);
-                AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                alarmManager.cancel(pendingIntent2);
+                if(alarmManager==null)
+                    alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+                PendingIntent pendingIntent = PendingIntent.getService(context, id, notificationIntent,
+                                PendingIntent.FLAG_NO_CREATE);
+                if (pendingIntent != null && alarmManager != null) {
+                    alarmManager.cancel(pendingIntent);
+                }
+
                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), 7*24*60*60*1000, pendingIntent2);
             }
         }

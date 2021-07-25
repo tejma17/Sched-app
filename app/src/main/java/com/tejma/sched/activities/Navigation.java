@@ -1,4 +1,4 @@
-package com.tejma.sched;
+package com.tejma.sched.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.IntentSender;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,11 +18,21 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.tasks.Task;
 import com.luseen.spacenavigation.SpaceItem;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.luseen.spacenavigation.SpaceOnClickListener;
-import com.tejma.sched.Service.AlarmBroadcast;
-import com.tejma.sched.Service.OnClearFromRecentService;
+import com.tejma.sched.Utils.CreateNotification;
+import com.tejma.sched.fragments.Home;
+import com.tejma.sched.R;
+import com.tejma.sched.Utils.AlarmBroadcast;
+import com.tejma.sched.Utils.OnClearFromRecentService;
+import com.tejma.sched.fragments.Settings;
 
 public class Navigation extends AppCompatActivity {
 
@@ -46,6 +57,7 @@ public class Navigation extends AppCompatActivity {
                     new Home()).commit();
         }
 
+        checkUpdate();
 
         spaceOnClickListener = new SpaceOnClickListener() {
             @Override
@@ -108,6 +120,17 @@ public class Navigation extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if(!homeActive){
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container,
+                            new Home()).commit();
+            homeActive = true;
+        }else{
+            super.onBackPressed();
+        }
+    }
 
     @Override
     protected void onDestroy() {
@@ -131,10 +154,37 @@ public class Navigation extends AppCompatActivity {
         }
     };
 
+
+    private void checkUpdate() {
+        // Creates instance of the manager.
+        AppUpdateManager appUpdateManager;
+        appUpdateManager = AppUpdateManagerFactory.create(getApplicationContext());
+
+        // Returns an intent object that you use to check for an update.
+        Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+
+        // Checks that the platform will allow the specified type of update.
+        appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                    // For a flexible update, use AppUpdateType.FLEXIBLE
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                try {
+                    appUpdateManager.startUpdateFlowForResult(
+                            appUpdateInfo, AppUpdateType.FLEXIBLE, this, 100);
+                } catch (IntentSender.SendIntentException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     @Override
-    protected void onPostResume() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new Home()).commit();
-        super.onPostResume();
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100) {
+            if (resultCode != RESULT_OK) {
+                Log.i("TAG", "Update flow failed! Result code: " + resultCode);
+            }
+        }
     }
 }

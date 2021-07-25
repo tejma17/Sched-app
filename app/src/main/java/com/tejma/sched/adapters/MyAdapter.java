@@ -69,14 +69,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        String type = objects.get(position).getType().substring(0,3);
-        type = "("+type+")";
-        String titleText = objects.get(position).getSubject();
-        if (titleText.length() > 14) {
-            titleText = titleText.substring(0, 14) + "...";
-        }
-        holder.title.setText(titleText);
-        holder.type.setText(type);
+//        String type = objects.get(position).getType().substring(0,3);
+//        type = "("+type+")";
+//        holder.type.setText(type);
+        holder.title.setText(objects.get(position).getSubject());
         holder.code.setText(objects.get(position).getCode());
         holder.teacher.setText(objects.get(position).getFaculty());
         holder.time.setText(objects.get(position).getTime());
@@ -152,9 +148,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             @Override
             public void onClick(View view) {
                 link = objects.get(position).getMeet_link();
-                    if(!link.startsWith("https://"))
-                        link = "https://"+link;
-                    builder.show();
+                if(link.isEmpty()){
+                    Toast.makeText(context, "Invalid link", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(!link.startsWith("https://"))
+                    link = "https://"+link;
+
+                builder.show();
 
             }
         });
@@ -163,11 +164,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             @Override
             public void onClick(View view) {
                 link = objects.get(position).getClassroom_link();
+                if(link.isEmpty()){
+                    Toast.makeText(context, "Invalid link", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if(link.contains("classroom.google.com/")) {
                     if(link.startsWith("classroom.google.com/"))
                         link = "https://"+link;
                     builder.show();
-                }else
+                } else
                     Toast.makeText(context, "Invalid classroom link", Toast.LENGTH_SHORT).show();
             }
         });

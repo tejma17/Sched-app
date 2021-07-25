@@ -19,6 +19,9 @@ public class Lecture {
         this.isNotified = isNotified;
     }
 
+    public Lecture() {
+    }
+
     public boolean isNotified() {
         return isNotified;
     }

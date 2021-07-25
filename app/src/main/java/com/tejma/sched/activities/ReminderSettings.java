@@ -1,8 +1,7 @@
-package com.tejma.sched;
+package com.tejma.sched.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -12,8 +11,6 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.tejma.sched.databinding.ActivityReminderSettingsBinding;
-
-import java.util.Objects;
 
 public class ReminderSettings extends AppCompatActivity implements
         AdapterView.OnItemSelectedListener {

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+
     package="com.tejma.sched">
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -15,8 +18,8 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sched">
-        <activity android:name=".ReminderSettings" />
-        <activity android:name=".ScheduleEvent">
+        <activity android:name=".activities.ReminderSettings" />
+        <activity android:name=".activities.ScheduleEvent">
             <intent-filter
                 android:autoVerify="true"
                 android:label="Quick Schedule">
@@ -98,7 +101,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".OpenLinks"
+            android:name=".activities.OpenLinks"
             android:icon="@drawable/ic_lcd"
             android:label="Open Links"
             android:roundIcon="@drawable/ic_lcd">
@@ -109,6 +112,10 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:mimeType="application/pdf" />
 
                 <data
                     android:host="zoom.us"
@@ -181,9 +188,9 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login" />
+        <activity android:name=".activities.Login" />
         <activity
-            android:name=".Splash"
+            android:name=".activities.Splash"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -191,21 +198,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EditClass" />
-        <activity android:name=".AddClass" />
-        <activity android:name=".Navigation" />
+        <activity android:name=".activities.EditClass" />
+        <activity android:name=".activities.AddClass" />
+        <activity android:name=".activities.Navigation" >
+        </activity>
 
         <receiver
-            android:name=".Service.NotificationBroadcast"
+            android:name=".Utils.NotificationBroadcast"
             android:enabled="true"
             android:exported="false" />
         <receiver
-            android:name=".Service.AlarmBroadcast"
+            android:name=".Utils.AlarmBroadcast"
             android:enabled="true"
             android:exported="false" />
 
-        <service android:name=".Service.OnClearFromRecentService" />
-        <service android:name=".Service.OnClearFromRecentService" />
+        <service android:name=".Utils.OnClearFromRecentService" />
+        <service android:name=".Utils.OnClearFromRecentService" />
+
+        <provider
+            android:name=".Utils.GenericFileProvider"
+            android:authorities="com.tejma.sched"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+
     </application>
 
 </manifest>
