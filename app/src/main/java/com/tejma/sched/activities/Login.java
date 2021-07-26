@@ -122,6 +122,7 @@ public class Login extends AppCompatActivity {
 
         login.setOnClickListener(v -> {
             login.setEnabled(false);
+            Toast.makeText(this, "Processing...please wait", Toast.LENGTH_SHORT).show();
             if(!isConnection()){
                 Toast.makeText(this, "Enable network access.", Toast.LENGTH_SHORT).show();
                 return;

@@ -69,9 +69,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-//        String type = objects.get(position).getType().substring(0,3);
-//        type = "("+type+")";
-//        holder.type.setText(type);
+        String type = objects.get(position).getType().substring(0,1);
+        type = type.toUpperCase();
+        type = "("+type+")";
+        holder.type.setText(type);
         holder.title.setText(objects.get(position).getSubject());
         holder.code.setText(objects.get(position).getCode());
         holder.teacher.setText(objects.get(position).getFaculty());

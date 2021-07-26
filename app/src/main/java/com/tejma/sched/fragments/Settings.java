@@ -47,6 +47,7 @@ import com.tejma.sched.POJO.Lecture;
 import com.tejma.sched.R;
 import com.tejma.sched.Utils.ExportTimetable;
 import com.tejma.sched.Utils.JsonReader;
+import com.tejma.sched.activities.HelpActivity;
 import com.tejma.sched.activities.Login;
 import com.tejma.sched.activities.ReminderSettings;
 
@@ -133,6 +134,9 @@ public class Settings extends Fragment {
             }
         });
 
+        view.findViewById(R.id.help).setOnClickListener(v->{
+            startActivity(new Intent(getContext(), HelpActivity.class));
+        });
 
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -259,14 +263,12 @@ public class Settings extends Fragment {
             lectures.add(lecture);
         }
 
-        for(int i=0; i<lectures.size(); i++){
+        for(int i=0; i<lectures.size(); i++) {
             lectures.get(i).setDay(dataSnapshot.child("classes").child(String.valueOf(i)).child("day").getValue().toString());
             lectures.get(i).setTime(dataSnapshot.child("classes").child(String.valueOf(i)).child("time").getValue().toString());
-            //lectures.get(i).setType(dataSnapshot.child("classes").child(String.valueOf(i)).child("type").getValue().toString());
+            if (dataSnapshot.child("classes").child(String.valueOf(i)).hasChild("type"))
+                lectures.get(i).setType(dataSnapshot.child("classes").child(String.valueOf(i)).child("type").getValue().toString());
         }
-//        lecture.setTime(dataSnapshot.child("time").getValue().toString());
-//        lecture.setType(dataSnapshot.child("type").getValue().toString());
-//        lecture.setCode(dataSnapshot.child("code").getValue().toString())
 
         return lectures;
     }

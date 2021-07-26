@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:elevation="10dp"
+        android:background="@color/background"
+        android:layout_height="?android:actionBarSize">
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="3dp"
+            android:src="@drawable/ic_round_arrow_back_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="12dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="20dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="HELP"
+            android:fontFamily="@font/baloo"
+            android:textSize="20sp"
+            android:textColor="@color/set_text"/>
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:context=".activities.HelpActivity">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/raleway"
+                android:textStyle="bold"
+                android:textColor="@color/select"
+                android:textSize="20sp"
+                android:text="About Sched"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/select"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
+                android:fontFamily="@font/raleway"
+                android:textColor="@color/black"
+                android:lineSpacingExtra="4dp"
+                android:textSize="16sp"
+                android:text="During the pandemic, I found myself in a situation where I used to forget about my classes. Also, I have seen that many students used to search for the link every time they wanted to join a class. To tackle this issue, I developed this app Sched."/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/raleway"
+                android:textStyle="bold"
+                android:textColor="@color/select"
+                android:textSize="20sp"
+                android:text="Features"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/select"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
+                android:fontFamily="@font/raleway"
+                android:textColor="@color/black"
+                android:lineSpacingExtra="4dp"
+                android:textSize="16sp"
+                android:text="\u25CF Check your schedule at a glance
+                \n\u25CF Class reminders (beta)\n\u25CF Customized reminders
+        \n\u25CF Save meet and classroom links for easy access
+        \n\u25CF Open meeting links directly on your PC
+        \n\u25CF Share timetables using import/export features
+        \n\u25CF Import current timetables of IIIT Allahabad from server
+        \n\u25CF Join meetings from notifications without opening the app
+    \n\u25CF Quick schedule feature: Click on meeting link in any app and selecr Quick Schedule option of Sched."/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/raleway"
+                android:textStyle="bold"
+                android:textColor="@color/select"
+                android:textSize="20sp"
+                android:text="PC Link Sharing (Login Required)"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/select"/>
+
+            <TextView
+                android:id="@+id/pc_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
+                android:fontFamily="@font/raleway"
+                android:textColor="@color/black"
+                android:lineSpacingExtra="4dp"
+                android:textColorLink="@color/select"
+                android:autoLink="web"
+                android:textSize="16sp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/pc_sharing_explain"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="20dp"
+                    android:backgroundTint="@color/select"
+                    android:background="@drawable/logo_trans"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sched"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/raleway"
+                    android:textColor="@color/select"
+                    android:textSize="36sp"/>
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="30dp"
+                android:text="Your Online Class Companion"/>
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

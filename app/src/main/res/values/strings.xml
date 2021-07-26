@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Sched</string>
+    <string name="pc_sharing_explain">● Log in to <a href="https://web-sched.web.app">web-sched.web.app</a> with same mobile number.\n● Follow the instruction on the web site.\n● Make sure you have opened the website before sending the link.\n● Open meeting links from Sched app and you link will appear on PC.\n● You can even open links from <b/>external apps<b/>.\n● For example: If you have a link in your WhatsApp, then just click on the link and choose <b/>Open on PC<b/>. The link will get open on the website mentioned above. It is that simple.</string>
 </resources>
