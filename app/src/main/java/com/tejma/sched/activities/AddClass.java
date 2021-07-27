@@ -2,7 +2,11 @@ package com.tejma.sched.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +26,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tejma.sched.POJO.Lecture;
 import com.tejma.sched.R;
+import com.tejma.sched.Utils.AlarmReceiver;
+import com.tejma.sched.Utils.CreateNotification;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -71,15 +77,15 @@ public class AddClass extends AppCompatActivity {
         ArrayList<String> daysofweek = new ArrayList<String>();
         String[] daysOfWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
         daysofweek.addAll(Arrays.asList(daysOfWeek));
-        spinnerL.setAdapter(new ArrayAdapter<String>(AddClass.this,
+        spinnerL.setAdapter(new ArrayAdapter<>(AddClass.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 daysofweek));
 
-        spinnerP.setAdapter(new ArrayAdapter<String>(AddClass.this,
+        spinnerP.setAdapter(new ArrayAdapter<>(AddClass.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 daysofweek));
 
-        spinnerT.setAdapter(new ArrayAdapter<String>(AddClass.this,
+        spinnerT.setAdapter(new ArrayAdapter<>(AddClass.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 daysofweek));
 
@@ -87,35 +93,15 @@ public class AddClass extends AppCompatActivity {
         timeP.setOnClickListener(this::onTimeClick);
         timeT.setOnClickListener(this::onTimeClick);
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        back.setOnClickListener(view -> onBackPressed());
 
 
-        reminderL.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                isRemindL = b;
-            }
-        });
+        reminderL.setOnCheckedChangeListener((compoundButton, b) -> isRemindL = b);
 
 
-        reminderP.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                isRemindP = b;
-            }
-        });
+        reminderP.setOnCheckedChangeListener((compoundButton, b) -> isRemindP = b);
 
-        reminderT.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                isRemindT = b;
-            }
-        });
+        reminderT.setOnCheckedChangeListener((compoundButton, b) -> isRemindT = b);
 
         spinnerL.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -165,37 +151,74 @@ public class AddClass extends AppCompatActivity {
 
 
 
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                prepareMap();
-                String json = gson.toJson(courses);
-                sharedPreferences.edit().putString("Lectures", json).apply();
-                sharedPreferences.edit().putString("Notification", "NO").apply();
-                Toast.makeText(AddClass.this, "Course Saved", Toast.LENGTH_SHORT).show();
-                finish();
-            }
+        submit.setOnClickListener(view -> {
+            prepareMap();
+            String json = gson.toJson(courses);
+            sharedPreferences.edit().putString("Lectures", json).apply();
+            sharedPreferences.edit().putString("Notification", "NO").apply();
+            Toast.makeText(AddClass.this, "Course Saved", Toast.LENGTH_SHORT).show();
+            finish();
         });
 
     }
 
 
     void prepareMap(){
-        if(!timeL.getText().toString().equals("Set Time"))
-        courses.add(new Lecture(name.getText().toString(), code.getText().toString(),
-                faculty.getText().toString(), type1.getText().toString(),
-                timeL.getText().toString(), String.valueOf(dayL), meet.getText().toString(),
-                classroom.getText().toString(), isRemindL));
-        if(!timeT.getText().toString().equals("Set Time"))
-        courses.add(new Lecture(name.getText().toString(), code.getText().toString(),
-                faculty.getText().toString(), type2.getText().toString(),
-                timeT.getText().toString(), String.valueOf(dayT), meet.getText().toString(),
-                classroom.getText().toString(), isRemindT));
-        if(!timeP.getText().toString().equals("Set Time"))
-        courses.add(new Lecture(name.getText().toString(), code.getText().toString(),
-                faculty.getText().toString(), type3.getText().toString(),
-                timeP.getText().toString(), String.valueOf(dayP), meet.getText().toString(),
-                classroom.getText().toString(), isRemindP));
+        Lecture lecture = new Lecture();
+        lecture.setSubject(name.getText().toString().trim());
+        lecture.setClassroom_link(classroom.getText().toString().trim());
+        lecture.setMeet_link(meet.getText().toString().trim());
+        lecture.setCode(code.getText().toString().trim());
+        lecture.setFaculty(faculty.getText().toString().trim());
+
+        Lecture lectureT = new Lecture();
+        lectureT.setSubject(name.getText().toString().trim());
+        lectureT.setClassroom_link(classroom.getText().toString().trim());
+        lectureT.setMeet_link(meet.getText().toString().trim());
+        lectureT.setCode(code.getText().toString().trim());
+        lectureT.setFaculty(faculty.getText().toString().trim());
+
+        Lecture lectureP = new Lecture();
+        lectureP.setSubject(name.getText().toString().trim());
+        lectureP.setClassroom_link(classroom.getText().toString().trim());
+        lectureP.setMeet_link(meet.getText().toString().trim());
+        lectureP.setCode(code.getText().toString().trim());
+        lectureP.setFaculty(faculty.getText().toString().trim());
+
+        Lecture lectureL = new Lecture();
+        lectureL.setSubject(name.getText().toString().trim());
+        lectureL.setClassroom_link(classroom.getText().toString().trim());
+        lectureL.setMeet_link(meet.getText().toString().trim());
+        lectureL.setCode(code.getText().toString().trim());
+        lectureL.setFaculty(faculty.getText().toString().trim());
+
+        if(!timeL.getText().toString().equals("Set Time")) {
+            lectureL.setTime(timeL.getText().toString().trim());
+            lectureL.setDay(String.valueOf(dayL));
+            lectureL.setNotified(isRemindL);
+            lectureL.setType("LECTURE");
+            lectureL.setId(lectureL.hashCode());
+            courses.add(lectureL);
+            CreateNotification.createNotification(getApplicationContext(), lectureL);
+        }
+        if(!timeT.getText().toString().equals("Set Time")) {
+            lectureT.setTime(timeT.getText().toString().trim());
+            lectureT.setDay(String.valueOf(dayT));
+            lectureT.setNotified(isRemindT);
+            lectureT.setType("TUTORIAL");
+            lectureT.setId(lectureT.hashCode());
+            courses.add(lectureT);
+            CreateNotification.createNotification(getApplicationContext(), lectureT);
+        }
+        if(!timeP.getText().toString().equals("Set Time")){
+            lectureP.setTime(timeP.getText().toString().trim());
+            lectureP.setDay(String.valueOf(dayP));
+            lectureP.setNotified(isRemindP);
+            lectureP.setType("PRACTICAL");
+            lectureP.setId(lectureP.hashCode());
+            courses.add(lectureP);
+            CreateNotification.createNotification(getApplicationContext(), lectureP);
+        }
     }
 
     private void onTimeClick(View view) {
@@ -204,17 +227,14 @@ public class AddClass extends AppCompatActivity {
             int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
             int minute = mcurrentTime.get(Calendar.MINUTE);
             TimePickerDialog mTimePicker;
-            mTimePicker = new TimePickerDialog(AddClass.this, new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    String hour = String.valueOf(selectedHour), minute = String.valueOf(selectedMinute);
-                    if(selectedHour<10)
-                        hour = "0"+selectedHour;
-                    if(selectedMinute<10)
-                        minute = "0"+selectedMinute;
-                    String time = hour + ":" + minute;
-                    textView.setText(time);
-                }
+            mTimePicker = new TimePickerDialog(AddClass.this, (timePicker, selectedHour, selectedMinute) -> {
+                String hour1 = String.valueOf(selectedHour), minute1 = String.valueOf(selectedMinute);
+                if(selectedHour<10)
+                    hour1 = "0"+selectedHour;
+                if(selectedMinute<10)
+                    minute1 = "0"+selectedMinute;
+                String time = hour1 + ":" + minute1;
+                textView.setText(time);
             }, hour, minute, true);//Yes 24 hour time
             mTimePicker.show();
     }

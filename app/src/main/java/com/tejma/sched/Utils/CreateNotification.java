@@ -13,13 +13,15 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.gson.Gson;
 import com.tejma.sched.POJO.Lecture;
 import com.tejma.sched.R;
-import com.tejma.sched.Utils.AlarmBroadcast;
-import com.tejma.sched.Utils.NotificationBroadcast;
 import com.tejma.sched.activities.Navigation;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class CreateNotification {
 
@@ -27,105 +29,73 @@ public class CreateNotification {
     public static  Notification notification;
     public static PendingIntent pendingIntentphone, pendingIntentPC;
     public static AlarmManager alarmManager;
+    public static int notifyBefore;
     private static SharedPreferences sharedPreferences;
 
-    public static void createNotification(Context context, Lecture lecture, int id){
+    public static void createNotification(Context context, Lecture lecture){
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
 
+            int id = lecture.getId();
+
             sharedPreferences = context.getSharedPreferences("Classes", Context.MODE_PRIVATE);
-            int notifyBefore = sharedPreferences.getInt("NotifyBefore", 10);
+            notifyBefore = sharedPreferences.getInt("NotifyBefore", 10);
 
 
-            Intent intentPhone = new Intent(context, NotificationBroadcast.class)
-                    .setAction("phone");
-            intentPhone.putExtra(AlarmBroadcast.NOTIFICATION_ID, id);
-            intentPhone.putExtra("Link", lecture.getMeet_link());
-            pendingIntentphone = PendingIntent.getBroadcast(context, id,
-                    intentPhone, PendingIntent.FLAG_UPDATE_CURRENT);
+            //intent for alarm manager
+            Intent notificationIntent = getNotificationIntent(lecture, context);
 
-            Intent intentPC = new Intent(context, NotificationBroadcast.class)
-                    .setAction("PC");
-            intentPC.putExtra(AlarmBroadcast.NOTIFICATION_ID, id);
-            intentPC.putExtra("Link", lecture.getMeet_link());
-            pendingIntentPC = PendingIntent.getBroadcast(context, id,
-                    intentPC, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-            Intent resultIntent = new Intent(context, Navigation.class);
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-            stackBuilder.addNextIntentWithParentStack(resultIntent);
-            PendingIntent resultPendingIntent =
-                    stackBuilder.getPendingIntent(id, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            String titleText = lecture.getSubject();
-            if (titleText.length() > 25) {
-                titleText = titleText.substring(0, 25) + "...";
-            }
-
-            notification = new NotificationCompat.Builder(context, CHANNEL_ID)
-                    .setSmallIcon(R.drawable.logo_trans)
-                    .setContentTitle(titleText)
-                    .setContentText(lecture.getType()+" class scheduled in "+notifyBefore+" minutes")
-                    .setAutoCancel(true)
-                    .setShowWhen(false)
-                    .setOnlyAlertOnce(false)
-                    .setColor(ContextCompat.getColor(context, R.color.select))
-                    .setContentIntent(resultPendingIntent)
-                    .addAction(R.drawable.ic_google_meet_color, "Join on phone", pendingIntentphone)
-                    .addAction(R.drawable.ic_google_meet_color, "Join on PC", pendingIntentPC)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .build();
-
-            Intent notificationIntent = new Intent(context, AlarmBroadcast.class);
-            notificationIntent.setAction(lecture.getMeet_link());
-            notificationIntent.putExtra(AlarmBroadcast.NOTIFICATION_ID, id);
-            notificationIntent.putExtra(AlarmBroadcast.NOTIFICATION, notification);
-            PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, id,
+            PendingIntent notificationPendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), lecture.getId(),
                     notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-            // getDay return string containing int values of week staring from 1 for monday to 7 for sunday
+            Calendar time = setTime(lecture, notifyBefore);
+            SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, h:mm a", Locale.getDefault());
 
-            String[] lecTimeDivided = lecture.getTime().split(":");
-            Calendar time = Calendar.getInstance();
-
-            int day =  findIndex(Integer.parseInt(lecture.getDay()));
-           // Log.i("Details= "+lecture.getSubject()+" "+lecture.getType(), lecture.getDay()+" "+day);
-            int hour = Integer.parseInt(lecTimeDivided[0]);
-            int minutes =  Integer.parseInt(lecTimeDivided[1]);
-            if(minutes<notifyBefore){
-                int diff = notifyBefore-minutes;
-                minutes = 60-diff;
-                if(hour==0){
-                    hour = 23;
-                    if(day==2)
-                        day = findIndex(7);
-                    else
-                        day = findIndex(Integer.parseInt(lecture.getDay())-1);
-                }else
-                    hour--;
-            }else{
-                minutes = minutes-notifyBefore;
+            if(System.currentTimeMillis() > time.getTimeInMillis()) {
+                time.add(Calendar.WEEK_OF_YEAR, 1);
             }
-            time.set(Calendar.DAY_OF_WEEK, day);
-            time.set(Calendar.HOUR_OF_DAY, hour);
-            time.set(Calendar.MINUTE, minutes);
-            time.set(Calendar.SECOND, 0);
 
-            if(System.currentTimeMillis()-time.getTimeInMillis()<=480000) {
-                Log.i("Scheduled "+lecture.getSubject()+" "+lecture.getType(), "At "+time.getTime()+" id "+id);
-                if(alarmManager==null)
-                    alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+//            Log.d("nneewwww", sdf.format(time.getTimeInMillis()));
 
-                PendingIntent pendingIntent = PendingIntent.getService(context, id, notificationIntent,
-                                PendingIntent.FLAG_NO_CREATE);
-                if (pendingIntent != null && alarmManager != null) {
-                    alarmManager.cancel(pendingIntent);
-                }
+            if (alarmManager == null)
+                    alarmManager = (AlarmManager) context.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
 
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), 7*24*60*60*1000, pendingIntent2);
-            }
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(),
+                        7 * AlarmManager.INTERVAL_DAY, notificationPendingIntent);
+
+//                Log.d("nneewwww", "ALARM CREATED " + notificationPendingIntent.toString());
         }
+    }
+
+    public static Calendar setTime(Lecture lecture, int notifyBefore){
+        String[] lecTimeDivided = lecture.getTime().split(":");
+        Calendar time = Calendar.getInstance();
+
+        // getDay return string containing int values of week staring from 1 for monday to 7 for sunday
+        int day =  findIndex(Integer.parseInt(lecture.getDay()));
+
+        int hour = Integer.parseInt(lecTimeDivided[0]);
+        int minutes =  Integer.parseInt(lecTimeDivided[1]);
+
+        if(minutes<notifyBefore){
+            int diff = notifyBefore-minutes;
+            minutes = 60-diff;
+            if(hour==0){
+                hour = 23;
+                if(day==2)
+                    day = findIndex(7);
+                else
+                    day = findIndex(Integer.parseInt(lecture.getDay())-1);
+            }else
+                hour--;
+        }else{
+            minutes = minutes-notifyBefore;
+        }
+        time.set(Calendar.DAY_OF_WEEK, day);
+        time.set(Calendar.HOUR_OF_DAY, hour);
+        time.set(Calendar.MINUTE, minutes);
+        time.set(Calendar.SECOND, 0);
+        return time;
     }
 
     public static int findIndex(int t) {
@@ -143,5 +113,56 @@ public class CreateNotification {
         return -1;
     }
 
+    public static Intent getNotificationIntent(Lecture lecture, Context context){
+        String titleText = lecture.getSubject();
+        if (titleText.length() > 25) {
+            titleText = titleText.substring(0, 25) + "...";
+        }
+
+
+        //intent for phone button
+        Intent intentPhone = new Intent(context, NotificationActionsReceiver.class)
+                .setAction("phone");
+        intentPhone.putExtra(AlarmReceiver.NOTIFICATION_ID, lecture.getId());
+        intentPhone.putExtra("Link", lecture.getMeet_link());
+        pendingIntentphone = PendingIntent.getBroadcast(context, lecture.getId(),
+                intentPhone, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        //intent for PC button
+        Intent intentPC = new Intent(context, NotificationActionsReceiver.class)
+                .setAction("PC");
+        intentPC.putExtra(AlarmReceiver.NOTIFICATION_ID, lecture.getId());
+        intentPC.putExtra("Link", lecture.getMeet_link());
+        pendingIntentPC = PendingIntent.getBroadcast(context, lecture.getId(),
+                intentPC, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        //intent for notification onclick
+        Intent resultIntent = new Intent(context, Navigation.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntentWithParentStack(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(lecture.getId(), PendingIntent.FLAG_UPDATE_CURRENT);
+
+        notification = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.drawable.logo_trans)
+                .setContentTitle(titleText)
+                .setContentText(lecture.getType()+" class scheduled in "+notifyBefore+" minutes")
+                .setAutoCancel(true)
+                .setShowWhen(false)
+                .setOnlyAlertOnce(false)
+                .setColor(ContextCompat.getColor(context, R.color.select))
+                .setContentIntent(resultPendingIntent)
+                .addAction(R.drawable.ic_google_meet_color, "Join on phone", pendingIntentphone)
+                .addAction(R.drawable.ic_google_meet_color, "Join on PC", pendingIntentPC)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .build();
+
+
+        Intent notificationIntent = new Intent(context, AlarmReceiver.class);
+        notificationIntent.setAction("FIRE_ALARM_SCHED");
+        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, new Gson().toJson(lecture));
+        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
+
+        return notificationIntent;
+    }
 
 }

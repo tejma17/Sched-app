@@ -1,16 +1,21 @@
 package com.tejma.sched.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,13 +29,18 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.luseen.spacenavigation.SpaceItem;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.luseen.spacenavigation.SpaceOnClickListener;
 import com.tejma.sched.Utils.CreateNotification;
 import com.tejma.sched.fragments.Home;
 import com.tejma.sched.R;
-import com.tejma.sched.Utils.AlarmBroadcast;
+import com.tejma.sched.Utils.AlarmReceiver;
 import com.tejma.sched.Utils.OnClearFromRecentService;
 import com.tejma.sched.fragments.Settings;
 
@@ -149,7 +159,7 @@ public class Navigation extends AppCompatActivity {
                     link = "https://" + link;
                 Intent intent1 = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
                 startActivity(intent1);
-                notificationManager.cancel(intent.getIntExtra(AlarmBroadcast.NOTIFICATION_ID, 100));
+                notificationManager.cancel(intent.getIntExtra(AlarmReceiver.NOTIFICATION_ID, 100));
             }
         }
     };

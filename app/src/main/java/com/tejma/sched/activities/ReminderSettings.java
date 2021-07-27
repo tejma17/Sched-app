@@ -2,6 +2,10 @@ package com.tejma.sched.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +14,14 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.tejma.sched.POJO.Lecture;
+import com.tejma.sched.Utils.CreateNotification;
 import com.tejma.sched.databinding.ActivityReminderSettingsBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReminderSettings extends AppCompatActivity implements
         AdapterView.OnItemSelectedListener {
@@ -85,5 +96,27 @@ public class ReminderSettings extends AppCompatActivity implements
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        String jsonIn = sharedPreferences.getString("Lectures", null);
+        if(jsonIn!=null) {
+            List<Lecture> lectures = new Gson().fromJson(jsonIn, new TypeToken<ArrayList<Lecture>>() {}.getType());
+            if(lectures!=null) {
+                for (Lecture lecture : lectures) {
+                    Intent intent = CreateNotification.getNotificationIntent(lecture, getApplicationContext());
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
+                            lecture.getId(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                    AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+                    alarmManager.cancel(pendingIntent);
+                }
+
+                for (Lecture lecture : lectures) {
+                    CreateNotification.createNotification(getApplicationContext(), lecture);
+                }
+            }
+        }
     }
 }

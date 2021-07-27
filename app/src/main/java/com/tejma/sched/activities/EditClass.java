@@ -2,7 +2,11 @@ package com.tejma.sched.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +28,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tejma.sched.POJO.Lecture;
 import com.tejma.sched.R;
+import com.tejma.sched.Utils.AlarmReceiver;
+import com.tejma.sched.Utils.CreateNotification;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -162,10 +168,25 @@ public class EditClass extends AppCompatActivity {
     void prepareMap(){
         lecturesSaved.remove(liveLecture);
 
-        lecturesSaved.add(new Lecture(name.getText().toString(), code.getText().toString(),
+        Lecture lecture = new Lecture(name.getText().toString(), code.getText().toString(),
                 faculty.getText().toString(), lectureType.getText().toString(),
                 time.getText().toString(), String.valueOf(updatedDay), meet.getText().toString(),
-                classroom.getText().toString(), shouldRemind));
+                classroom.getText().toString(), shouldRemind);
+        lecture.setId(lecture.hashCode());
+        lecturesSaved.add(lecture);
+
+        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = CreateNotification.getNotificationIntent(liveLecture, getApplicationContext());
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
+                liveLecture.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        if(pendingIntent!=null) {
+            alarmManager.cancel(pendingIntent);
+//            Log.d("nneewwww", "CANCELLED " + pendingIntent.toString());
+        }
+
+        CreateNotification.createNotification(getApplicationContext(), lecture);
+
+        //Log.d("nneewwww", "OLD "+liveLecture.getId()+" New "+pendingIntent.hashCode());
 
         if(!name.getText().toString().equals(lecName)){
             changeField("name");

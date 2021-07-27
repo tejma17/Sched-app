@@ -1,6 +1,8 @@
 package com.tejma.sched.fragments;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tejma.sched.Utils.AlarmReceiver;
 import com.tejma.sched.Utils.CreateNotification;
 import com.tejma.sched.POJO.Lecture;
 import com.tejma.sched.R;
@@ -143,17 +146,14 @@ public class Home extends Fragment implements MyAdapter.onNoteListener, View.OnC
         //flag for showing notifications, display if 1
         notiEnabled = sharedPreferences.getInt("NotiEnabled", 1);
 
-        int i = 100;
         boolean flag = false;
         for(Lecture lecture: lectures){
-
-            //check flags n individual course whether notify is enabled
-            if(notiEnabled==1 && lecture.isNotified() && notificationSent.equals("NO")) {
-                CreateNotification.createNotification(getActivity(), lecture, i);
-                i++;
-                flag = true;
-                //Toast.makeText(getContext(), "Scheduled "+i, Toast.LENGTH_SHORT).show();
-            }
+//            //check flags n individual course whether notify is enabled
+//            if(notiEnabled==1 && lecture.isNotified() && notificationSent.equals("NO")) {
+//                CreateNotification.createNotification(getActivity(), lecture);
+//                flag = true;
+//                //Toast.makeText(getContext(), "Scheduled "+i, Toast.LENGTH_SHORT).show();
+//            }
 
             if(Integer.parseInt(lecture.getDay()) == day){
                 todayLectures.add(lecture);
@@ -161,8 +161,8 @@ public class Home extends Fragment implements MyAdapter.onNoteListener, View.OnC
         }
 
         Collections.sort(todayLectures, new CompareByTime());
-        if(flag)
-            notificationSent = "YES";
+//        if(flag)
+//            notificationSent = "YES";
 
         //display empty if no lecture scheduled today
         if(todayLectures.size()==0)
@@ -252,6 +252,12 @@ public class Home extends Fragment implements MyAdapter.onNoteListener, View.OnC
                 .setPositiveButton("Class", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+                        Intent intent = CreateNotification.getNotificationIntent(lecture, getActivity().getApplicationContext());
+                        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity().getApplicationContext(),
+                                lecture.getId(), intent, 0);
+                        alarmManager.cancel(pendingIntent);
+
                         todayLectures.remove(lecture);
                         lectures.remove(lecture);
                         recyclerViewAdapter = new MyAdapter(requireContext(), selected.getTag().toString(),
@@ -264,12 +270,14 @@ public class Home extends Fragment implements MyAdapter.onNoteListener, View.OnC
                             animationView.setVisibility(View.VISIBLE);
                         else
                             animationView.setVisibility(View.GONE);
-
                     }
                 })
                 .setNegativeButton("Course", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+
+                AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+
                 for(Iterator<Lecture> iterator = todayLectures.iterator(); iterator.hasNext();){
                     Lecture lecture1 = iterator.next();
                     if(lecture1.getSubject().equals(lecture.getSubject())){
@@ -282,6 +290,10 @@ public class Home extends Fragment implements MyAdapter.onNoteListener, View.OnC
                     if(lecture1.getSubject().equals(lecture.getSubject())){
                         iterator.remove();
                     }
+                    Intent intent = CreateNotification.getNotificationIntent(lecture1, getActivity().getApplicationContext());
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity().getApplicationContext(),
+                            lecture1.getId(), intent, 0);
+                    alarmManager.cancel(pendingIntent);
                 }
 
                 recyclerViewAdapter = new MyAdapter(requireContext(), selected.getTag().toString(),

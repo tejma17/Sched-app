@@ -135,15 +135,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="10dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/raleway"
                 android:textColor="@color/black"
                 android:lineSpacingExtra="4dp"
                 android:textColorLink="@color/select"
                 android:autoLink="web"
                 android:textSize="16sp"
-                android:layout_marginBottom="20dp"
                 android:text="@string/pc_sharing_explain"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
+                android:fontFamily="@font/raleway"
+                android:lineSpacingExtra="4dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:text="\u25CF Supported platforms:
+\n1. Google Meet
+\n2. Zoom
+\n3. Microsoft Teams
+\n4. Cisco Webex"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"

@@ -1,8 +1,11 @@
 package com.tejma.sched.POJO;
 
+import android.app.PendingIntent;
+
 public class Lecture {
     private String subject, code, faculty, type, time, day;
     private String meet_link, classroom_link;
+    int id;
     private boolean isNotified;
 
     public Lecture(String subject, String code, String faculty,
@@ -19,7 +22,28 @@ public class Lecture {
         this.isNotified = isNotified;
     }
 
+    public Lecture(String subject, String code, String faculty, String type, String time, String day, String meet_link, String classroom_link, int id, boolean isNotified) {
+        this.subject = subject;
+        this.code = code;
+        this.faculty = faculty;
+        this.type = type;
+        this.time = time;
+        this.day = day;
+        this.meet_link = meet_link;
+        this.classroom_link = classroom_link;
+        this.id = id;
+        this.isNotified = isNotified;
+    }
+
     public Lecture() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean isNotified() {

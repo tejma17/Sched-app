@@ -1,6 +1,8 @@
 package com.tejma.sched.fragments;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.Context;
@@ -43,8 +45,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.tejma.sched.POJO.Lecture;
 import com.tejma.sched.R;
+import com.tejma.sched.Utils.AlarmReceiver;
+import com.tejma.sched.Utils.CreateNotification;
 import com.tejma.sched.Utils.ExportTimetable;
 import com.tejma.sched.Utils.JsonReader;
 import com.tejma.sched.activities.HelpActivity;
@@ -115,6 +120,17 @@ public class Settings extends Fragment {
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        AlarmManager alarmManager = (AlarmManager) getActivity().getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+                        String jsonIn = sharedPreferences.getString("Lectures", null);
+                        List<Lecture> tempLectures = new Gson().fromJson(jsonIn, new TypeToken<ArrayList<Lecture>>(){}.getType());
+                        for(Lecture lecture : tempLectures){
+                            Intent intent = CreateNotification.getNotificationIntent(lecture,
+                                    getActivity().getApplicationContext());
+                            PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity().getApplicationContext(),
+                                    lecture.getId(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                            alarmManager.cancel(pendingIntent);
+                        }
+
                         sharedPreferences.edit().clear().apply();
                         Toast.makeText(getContext(), "Data Cleared", Toast.LENGTH_SHORT).show();
                     }
@@ -268,6 +284,9 @@ public class Settings extends Fragment {
             lectures.get(i).setTime(dataSnapshot.child("classes").child(String.valueOf(i)).child("time").getValue().toString());
             if (dataSnapshot.child("classes").child(String.valueOf(i)).hasChild("type"))
                 lectures.get(i).setType(dataSnapshot.child("classes").child(String.valueOf(i)).child("type").getValue().toString());
+
+            lectures.get(i).setId(lectures.get(i).hashCode());
+            CreateNotification.createNotification(getActivity().getApplicationContext(), lectures.get(i));
         }
 
         return lectures;
@@ -345,7 +364,7 @@ public class Settings extends Fragment {
     public void showFileChooser() {
         Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
         chooseFile.setType("*/*");
-        chooseFile = Intent.createChooser(chooseFile, "Choose a file");
+        chooseFile = Intent.createChooser(chooseFile, "Choose a .scd file");
         startActivityForResult(chooseFile, PICKFILE_RESULT_CODE);
     }
 
@@ -373,10 +392,23 @@ public class Settings extends Fragment {
                 }
 
                 String json = JsonReader.getJsonFrom(getContext(), file);
-                sharedPreferences.edit().clear().apply();
-                sharedPreferences.edit().putString("Lectures", json).apply();
-                Toast.makeText(getContext(), "Successfully imported from the file", Toast.LENGTH_SHORT).show();
+                if(json!=null) {
+                    sharedPreferences.edit().clear().apply();
+                    sharedPreferences.edit().putString("Lectures", json).apply();
+                    Toast.makeText(getContext(), "Successfully imported from the file", Toast.LENGTH_SHORT).show();
+                    generateNotifications(json);
+                } else {
+                    Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
+
             }
+        }
+    }
+
+    private void generateNotifications(String json) {
+        ArrayList<Lecture> lectures1 = new Gson().fromJson(json, new TypeToken<ArrayList<Lecture>>(){}.getType());
+        for(Lecture lecture : lectures1){
+            CreateNotification.createNotification(getActivity().getApplicationContext(), lecture);
         }
     }
 
