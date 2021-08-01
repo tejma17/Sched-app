@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tejma.sched.R;
 
@@ -16,8 +17,13 @@ public class HelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
+        TextView testLink = findViewById(R.id.test_share);
+        TextView shareFeature = findViewById(R.id.pc_share);
+
         findViewById(R.id.back).setOnClickListener(view -> finish());
 
-        ((TextView)findViewById(R.id.pc_share)).setMovementMethod(LinkMovementMethod.getInstance());
+        shareFeature.setMovementMethod(LinkMovementMethod.getInstance());
+
+        testLink.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Sched</string>
-    <string name="pc_sharing_explain">● Log in to <a href="https://web-sched.web.app">web-sched.web.app</a> with same mobile number.\n● Follow the instruction on the web site.\n● Make sure you have opened the website before sending the link.\n● Open meeting links from Sched app and you link will appear on PC.\n● You can even open links from <b/>external apps<b/>.\n● For example: If you have a link in your WhatsApp, then just click on the link and choose <b/>Open on PC<b/>. The link will get open on the website mentioned above. It is that simple.</string>
+    <string name="pc_sharing_explain">● Now you can share any link from <b/>external apps<b/> on your PC through Sched.\n● Suppose you want to open a link from Notes app to PC.\n● All you have to do is click on the link and select <b/>Open on PC<b/> option.\n● Navigate to https://web-sched.web.app.\n● Log in with the same mobile number (one-time step) if you have not already logged in.\n● Sched will automatically redirect you to the shared link.</string>
 </resources>

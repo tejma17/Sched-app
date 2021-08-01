@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.webkit.URLUtil;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,16 +25,35 @@ public class OpenLinks extends AppCompatActivity {
 
         Intent intent = getIntent();
         Uri data = intent.getData();
+        String action = intent.getAction();
+        String type = intent.getType();
 
         if(isConnection()) {
+            String url = "";
+            if (data!=null)
+                url = data.toString();
+
+            if (Intent.ACTION_SEND.equals(action) && type != null) {
+                if ("text/plain".equals(type)) {
+                    String text = intent.getStringExtra(Intent.EXTRA_TEXT);
+                    if(URLUtil.isValidUrl(text)){
+                        url = text;
+                    }else{
+                        Toast.makeText(this, "Not a valid URL", Toast.LENGTH_SHORT).show();
+                        finish();
+                        return;
+                    }
+                }
+            }
+
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if(user!=null) {
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(user.getUid());
-                databaseReference.child("Link").setValue(data.toString());
+                databaseReference.child("Link").setValue(url);
                 Toast.makeText(this, "Success: Visit web-sched.web.app", Toast.LENGTH_LONG).show();
             }else {
                 Toast.makeText(this, "Login to app first", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(OpenLinks.this, Login.class).putExtra("IntentAction", "OpenLinkSPLIT"+data.toString()));
+                startActivity(new Intent(OpenLinks.this, Login.class).putExtra("IntentAction", "OpenLinkSPLIT"+url));
                 finish();
             }
         }else

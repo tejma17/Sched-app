@@ -101,6 +101,16 @@
             android:icon="@drawable/ic_lcd"
             android:label="Open Links"
             android:roundIcon="@drawable/ic_lcd">
+
+            <intent-filter
+                android:autoVerify="true"
+                android:label="Open on PC" >
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+
+
             <intent-filter
                 android:autoVerify="true"
                 android:label="Open on PC">
@@ -109,6 +119,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
+
+                <data
+                    android:host="*"
+                    android:scheme="https" />
 
                 <data
                     android:host="zoom.us"
