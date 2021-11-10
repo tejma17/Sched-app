@@ -13,11 +13,12 @@
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
-        android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.Sched">
-        <activity android:name=".activities.HelpActivity"></activity>
+        <activity android:name=".activities.NotificationsActivity"></activity>
+        <activity android:name=".activities.HelpActivity" />
         <activity android:name=".activities.ReminderSettings" />
         <activity android:name=".activities.ScheduleEvent">
             <intent-filter
@@ -101,16 +102,15 @@
             android:icon="@drawable/ic_lcd"
             android:label="Open Links"
             android:roundIcon="@drawable/ic_lcd">
-
             <intent-filter
                 android:autoVerify="true"
-                android:label="Open on PC" >
+                android:label="Open on PC">
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="text/plain" />
             </intent-filter>
-
-
             <intent-filter
                 android:autoVerify="true"
                 android:label="Open on PC">
@@ -119,11 +119,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-
                 <data
                     android:host="*"
                     android:scheme="https" />
-
                 <data
                     android:host="zoom.us"
                     android:scheme="http" />
@@ -204,7 +202,7 @@
         </activity>
         <activity android:name=".activities.EditClass" />
         <activity android:name=".activities.AddClass" />
-        <activity android:name=".activities.Navigation"></activity>
+        <activity android:name=".activities.Navigation" />
 
         <receiver
             android:name=".Utils.NotificationActionsReceiver"
@@ -213,14 +211,13 @@
         <receiver
             android:name=".Utils.AlarmReceiver"
             android:enabled="true"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
-                <action android:name="FIRE_ALARM_SCHED"/>
+                <action android:name="FIRE_ALARM_SCHED" />
             </intent-filter>
         </receiver>
 
         <service android:name=".Utils.OnClearFromRecentService" />
-
         <service
             android:name=".Utils.MyFirebaseMessagingService"
             android:exported="false">

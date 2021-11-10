@@ -24,6 +24,16 @@
             android:fontFamily="@font/baloo"
             android:textSize="20sp"
             android:textColor="@color/set_text"/>
+
+        <ImageView
+            android:id="@+id/noti_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_notifications_24"
+            android:layout_gravity="end"
+            android:padding="10dp"
+            android:layout_marginEnd="20dp"/>
+
     </com.google.android.material.appbar.MaterialToolbar>
 
     <HorizontalScrollView

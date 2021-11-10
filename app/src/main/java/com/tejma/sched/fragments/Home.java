@@ -29,7 +29,9 @@ import com.tejma.sched.Utils.AlarmReceiver;
 import com.tejma.sched.Utils.CreateNotification;
 import com.tejma.sched.POJO.Lecture;
 import com.tejma.sched.R;
+import com.tejma.sched.Utils.MyFirebaseMessagingService;
 import com.tejma.sched.activities.EditClass;
+import com.tejma.sched.activities.NotificationsActivity;
 import com.tejma.sched.adapters.MyAdapter;
 import com.tejma.sched.adapters.OnSwipeTouchListener;
 import com.tejma.sched.comparator.CompareByTime;
@@ -75,7 +77,8 @@ public class Home extends Fragment implements MyAdapter.onNoteListener, View.OnC
 
         initElements();
 
-
+        view.findViewById(R.id.noti_btn).setOnClickListener(v->
+                startActivity(new Intent(getContext(), NotificationsActivity.class)));
 
         list.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             @Override
